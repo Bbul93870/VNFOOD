@@ -1,4 +1,4 @@
-/* CSV LINKS */
+/* GOOGLE SHEETS */
 const SHEET_PRODUCTS =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
 
@@ -7,19 +7,15 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-/* LOAD HIGHLIGHT — LIMIT 3 */
+/* LOAD HIGHLIGHT */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
     complete: res => {
-        const slider = document.getElementById("highlightSlider");
-        const limited = res.data.filter(i => i.name).slice(0, 3);
-
-        limited.forEach(item => {
-            slider.innerHTML += `
-                <div class="highlight-box">
-                    <img src="${item.img_url}">
-                </div>`;
+        const div = document.getElementById("highlightSlider");
+        res.data.slice(0, 10).forEach(item => {
+            if (!item.img_url) return;
+            div.innerHTML += `<img src="${item.img_url}">`;
         });
     }
 });
@@ -34,84 +30,42 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* RENDER PRODUCTS */
+/* RENDER GRID */
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
-
-    list.forEach(item => {
+    list.forEach(p => {
         grid.innerHTML += `
             <div class="item">
-                <img src="${item.img_url}">
-                <div class="name">${item.name}</div>
-                <div class="price">${item.price}</div>
-            </div>`;
+                <img src="${p.img_url}">
+                <div class="name">${p.name}</div>
+                <div class="price">${p.price}</div>
+            </div>
+        `;
     });
 }
 
-/* OPEN SEARCH */
-function openSearch() {
-    document.getElementById("searchBar").style.display = "block";
-
-    document.querySelector(".hero").style.display = "none";
-    document.getElementById("stickyHighlight").style.display = "none";
-
-    document.getElementById("searchInput").focus();
-}
-
-/* CLOSE SEARCH */
-function closeSearch() {
-    document.getElementById("searchBar").style.display = "none";
-
-    document.querySelector(".hero").style.display = "block";
-    document.getElementById("stickyHighlight").style.display = "block";
-
-    document.getElementById("searchInput").value = "";
-    renderProducts(allProducts);
-}
-
-/* LIVE SEARCH FILTER */
+/* SEARCH */
 function applyFilters() {
-    let q = document.getElementById("searchInput").value.toLowerCase().trim();
-    let words = q.split(" ").filter(a => a);
+    let q = document.getElementById("searchInput").value
+        .toLowerCase()
+        .trim();
 
     let result = allProducts.filter(p =>
-        words.every(w => p.name.toLowerCase().includes(w))
+        p.name.toLowerCase().includes(q)
     );
 
     renderProducts(result);
 }
 
-/* STICKY LOGIC */
-let lastY = 0;
-const sticky = document.getElementById("stickyHighlight");
+/* CLOSE SEARCH */
+function closeSearch() {
+    document.getElementById("searchInput").value = "";
+    renderProducts(allProducts);
+}
 
-window.addEventListener("scroll", () => {
-    let y = window.scrollY;
-
-    if (y > lastY + 5) {
-        sticky.classList.add("hide");
-    } else {
-        sticky.classList.remove("hide");
-    }
-
-    lastY = y <= 0 ? 0 : y;
-});
-
-/* HIGHLIGHT SLIDER DRAG */
-const slider = document.querySelector(".slider");
-let isDown = false, startX, scrollLeft;
-
-slider.addEventListener("mousedown", e => {
-    isDown = true;
-    startX = e.pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-});
-
-slider.addEventListener("mouseup", () => isDown = false);
-slider.addEventListener("mouseleave", () => isDown = false);
-
-slider.addEventListener("mousemove", e => {
-    if (!isDown) return;
-    slider.scrollLeft = scrollLeft - ((e.pageX - slider.offsetLeft) - startX);
-});
+/* HIGHLIGHT MENU TOGGLE */
+function toggleHighlightMenu() {
+    const menu = document.getElementById("highlightMenu");
+    menu.classList.toggle("open");
+}
