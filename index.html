@@ -5,7 +5,6 @@
     <title>VN FOOD - General Store</title>
     <link rel="stylesheet" href="style.css">
 
-    <!-- PapaParse -->
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
@@ -14,32 +13,33 @@
     <img src="https://i.imgur.com/GJHq5nY.png" class="logo">
     <h1>VN FOOD</h1>
     <p class="subtitle">Your Trusted General Store</p>
-    <button class="tagline">Eat Well, Feel Good, Live Happy!</button>
 </header>
 
-<h2 class="section-title">⭐ Highlight Items ⭐</h2>
-<div class="slider" id="highlightSlider"></div>
+<!-- SEARCH (sticky) -->
+<div class="sticky-search">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
+    </div>
 
-<!-- SEARCH + CATEGORY -->
-<div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
-
-    <select id="categoryFilter" onchange="applyFilters()">
-        <option value="all">All Categories</option>
-    </select>
+    <div class="category-container">
+        <select id="categoryFilter" onchange="applyFilters()">
+            <option value="all">All Categories</option>
+        </select>
+    </div>
 </div>
 
-<h2 class="section-title">🛒 Product List 🛒</h2>
+<!-- HIGHLIGHT -->
+<h2 class="section-title margin-top">⭐ Highlight Items ⭐</h2>
+<div class="slider" id="highlightSlider"></div>
 
+<!-- PRODUCT SECTION -->
+<h2 class="section-title">🛒 Product List 🛒</h2>
 <div class="grid-container">
     <div class="grid" id="productGrid"></div>
 </div>
 
 <script>
-/*  ==========================================
-    CONFIG: CSV LINKS FROM YOUR SPREADSHEETS
-    ========================================== */
-const SHEET_PRODUCTS = 
+const SHEET_PRODUCTS =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
 
 const SHEET_HIGHLIGHT =
@@ -47,10 +47,7 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-
-/* =============================
-   LOAD HIGHLIGHT ITEMS
-   ============================= */
+/* LOAD HIGHLIGHT */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
@@ -59,7 +56,7 @@ Papa.parse(SHEET_HIGHLIGHT, {
             if (!item.name) return;
             highlightSlider.innerHTML += `
                 <div class="highlight-box">
-                    <img src="${item.img_url}">
+                    <img src="${item.img_url}?v=${Date.now()}">
                     <div class="highlight-name">${item.name}</div>
                     <div class="highlight-price">${item.price}</div>
                 </div>`;
@@ -67,10 +64,7 @@ Papa.parse(SHEET_HIGHLIGHT, {
     }
 });
 
-
-/* =============================
-   LOAD PRODUCT LIST
-   ============================= */
+/* LOAD PRODUCTS */
 Papa.parse(SHEET_PRODUCTS, {
     download: true,
     header: true,
@@ -81,10 +75,7 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-
-/* =============================
-   AUTO CATEGORY FROM SHEETS
-   ============================= */
+/* CATEGORY FILTER */
 function generateCategoryFilter(items) {
     const select = document.getElementById("categoryFilter");
     let categories = ["all"];
@@ -99,10 +90,7 @@ function generateCategoryFilter(items) {
     });
 }
 
-
-/* =============================
-   RENDER PRODUCT GRID
-   ============================= */
+/* RENDER PRODUCTS */
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
@@ -110,21 +98,17 @@ function renderProducts(list) {
     list.forEach(item => {
         grid.innerHTML += `
             <div class="item" data-category="${item.category.toLowerCase()}">
-                <img src="${item.img_url}">
+                <img src="${item.img_url}?v=${Date.now()}">
                 <div class="name">${item.name}</div>
                 <div class="price">${item.price}</div>
             </div>`;
     });
 }
 
-
-/* =============================
-   SEARCH + CATEGORY FILTER
-   ============================= */
+/* SEARCH + CATEGORY FILTER */
 function applyFilters() {
     let search = document.getElementById("searchInput").value.toLowerCase().trim();
     let category = document.getElementById("categoryFilter").value.toLowerCase();
-
     let words = search.split(" ").filter(w => w.length > 0);
 
     let filtered = allProducts.filter(item => {
