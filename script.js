@@ -1,4 +1,4 @@
-/* GOOGLE SHEET LINKS */
+/* CSV LINKS */
 const SHEET_PRODUCTS =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
 
@@ -7,16 +7,15 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-/* LOAD HIGHLIGHT */
+/* LOAD HIGHLIGHT (LIMIT 3 ITEMS ONLY) */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
     complete: res => {
         const slider = document.getElementById("highlightSlider");
+        const limited = res.data.filter(i => i.name).slice(0, 3);
 
-        res.data.forEach(item => {
-            if (!item.name) return;
-
+        limited.forEach(item => {
             slider.innerHTML += `
                 <div class="highlight-box">
                     <img src="${item.img_url}">
@@ -39,7 +38,6 @@ Papa.parse(SHEET_PRODUCTS, {
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
-
     list.forEach(item => {
         grid.innerHTML += `
             <div class="item">
@@ -50,20 +48,17 @@ function renderProducts(list) {
     });
 }
 
-/* OPEN SEARCH (iOS Style) */
+/* OPEN SEARCH */
 function openSearch() {
     document.getElementById("searchBar").style.display = "block";
-
     document.querySelector(".hero").style.display = "none";
     document.getElementById("stickyHighlight").style.display = "none";
-
     document.getElementById("searchInput").focus();
 }
 
 /* CLOSE SEARCH */
 function closeSearch() {
     document.getElementById("searchBar").style.display = "none";
-
     document.querySelector(".hero").style.display = "block";
     document.getElementById("stickyHighlight").style.display = "block";
 
@@ -71,19 +66,19 @@ function closeSearch() {
     renderProducts(allProducts);
 }
 
-/* REAL-TIME SEARCH */
+/* LIVE SEARCH */
 function applyFilters() {
-    let val = document.getElementById("searchInput").value.toLowerCase().trim();
-    let words = val.split(" ").filter(a => a);
+    let q = document.getElementById("searchInput").value.toLowerCase().trim();
+    let terms = q.split(" ").filter(a => a);
 
     let filtered = allProducts.filter(p =>
-        words.every(w => p.name.toLowerCase().includes(w))
+        terms.every(t => p.name.toLowerCase().includes(t))
     );
 
     renderProducts(filtered);
 }
 
-/* STICKY HIGHLIGHT SCROLL LOGIC */
+/* STICKY LOGIC */
 let lastY = 0;
 const sticky = document.getElementById("stickyHighlight");
 
@@ -91,7 +86,6 @@ window.addEventListener("scroll", () => {
     let y = window.scrollY;
 
     if (y > lastY + 5) {
-        sticky.classList.add("compact");
         sticky.classList.add("hide");
     } else {
         sticky.classList.remove("hide");
@@ -100,7 +94,7 @@ window.addEventListener("scroll", () => {
     lastY = y <= 0 ? 0 : y;
 });
 
-/* DRAG TO SCROLL SLIDER */
+/* SLIDER DRAG */
 const slider = document.querySelector(".slider");
 let down = false, startX, scrollLeft;
 
@@ -117,17 +111,3 @@ slider.addEventListener("mousemove", e => {
     if (!down) return;
     slider.scrollLeft = scrollLeft - ((e.pageX - slider.offsetLeft) - startX);
 });
-
-/* MOBILE TOUCH */
-slider.addEventListener("touchstart", e => {
-    down = true;
-    startX = e.touches[0].pageX - slider.offsetLeft;
-    scrollLeft = slider.scrollLeft;
-}, { passive: true });
-
-slider.addEventListener("touchmove", e => {
-    if (!down) return;
-    slider.scrollLeft = scrollLeft - ((e.touches[0].pageX - slider.offsetLeft) - startX);
-}, { passive: true });
-
-slider.addEventListener("touchend", () => down = false);
