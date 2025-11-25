@@ -10,7 +10,9 @@ body {
     background-attachment: fixed;
 }
 
-/* HEADER */
+/* ========================
+   HEADER FIXED MOBILE
+   ======================== */
 .hero {
     position: fixed;
     top: 0;
@@ -35,16 +37,23 @@ body {
     height: 42px;
     border-radius: 50%;
 }
+
 .hero h1 {
-    font-size: 20px;
     margin: 0;
+    font-size: 20px;
 }
 
-/* Shift content below header */
-body { padding-top: 70px; }
+/* SHIFT CONTENT BELOW HEADER */
+body {
+    padding-top: 70px;
+    padding-bottom: 110px;
+}
 
-/* GRID */
+/* ========================
+   PRODUCT GRID
+   ======================== */
 .grid-container { padding: 15px; }
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
@@ -59,31 +68,33 @@ body { padding-top: 70px; }
     text-align: center;
     backdrop-filter: blur(10px);
 }
+
 .item img {
     width: 100%;
     aspect-ratio: 1/1;
-    object-fit: cover;
     border-radius: 10px;
+    object-fit: cover;
 }
+
 .name { font-weight: bold; }
 .price { color: gold; font-size: 16px; }
 
-/* ============================
-   FLOATING BOTTOM SEARCH BAR
-   ============================ */
+/* ================================
+   FLOATING SEARCH BAR (BOTTOM)
+   ================================ */
 .floating-search {
     position: fixed;
-    bottom: 20px;
+    bottom: 25px;
     left: 50%;
     transform: translateX(-50%);
 
     width: 90%;
+    padding: 12px 18px;
+
     background: rgba(255,255,255,0.22);
     backdrop-filter: blur(12px);
 
-    padding: 12px 18px;
     border-radius: 18px;
-
     display: flex;
     align-items: center;
     gap: 10px;
@@ -96,7 +107,6 @@ body { padding-top: 70px; }
     background: transparent;
     border: none;
     outline: none;
-
     color: white;
     font-size: 17px;
 }
@@ -105,14 +115,14 @@ body { padding-top: 70px; }
     background: rgba(0,0,0,0.5);
     border: 1px solid white;
     color: white;
-    padding: 5px 10px;
+    padding: 6px 10px;
     border-radius: 50%;
     cursor: pointer;
 }
 
-/* ============================
-   HIGHLIGHT BUTTON (SIDE)
-   ============================ */
+/* ================================
+   HIGHLIGHT TOGGLE BUTTON (SIDE)
+   ================================ */
 .highlight-toggle {
     position: fixed;
     top: 120px;
@@ -134,47 +144,82 @@ body { padding-top: 70px; }
     font-size: 22px;
 
     box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    cursor: pointer;
-
     z-index: 3100;
+    cursor: pointer;
 }
 
-/* ============================
-   HIGHLIGHT SLIDE-OUT MENU
-   ============================ */
+/* ================================
+   HIGHLIGHT MENU SCROLL FIXED
+   ================================ */
 .highlight-menu {
     position: fixed;
     top: 120px;
-    left: -200px;
-    width: 180px;
-    height: 300px;
+    left: -220px;
 
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
+    width: 210px;
+    height: 330px;
 
-    border-radius: 12px;
     padding: 12px;
+    border-radius: 14px;
 
-    overflow-y: auto;
-    scrollbar-width: none;
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(12px);
 
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 
     z-index: 3099;
     transition: 0.35s ease;
 }
-
-/* Hide scrollbar (iPhone look) */
 .highlight-menu::-webkit-scrollbar { display: none; }
 
 .highlight-menu.open {
     left: 75px;
 }
 
-#highlightSlider img {
-    width: 100%;
-    border-radius: 8px;
+/* ================================
+   HIGHLIGHT ITEM WITH PRICE
+   ================================ */
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    background: rgba(255,255,255,0.15);
+    padding: 8px;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+}
+
+.highlight-item img {
+    width: 55px;
+    height: 55px;
+    border-radius: 10px;
     object-fit: cover;
+}
+
+.highlight-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    color: white;
+}
+
+.h-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.h-price {
+    color: gold;
+    font-weight: bold;
+    font-size: 14px;
 }
