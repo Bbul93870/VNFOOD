@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>VN FOOD - General Store</title>
     <link rel="stylesheet" href="style.css">
+
+    <!-- PapaParse untuk baca CSV dari Google Sheets -->
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 
@@ -13,56 +16,81 @@
     <h1>VN FOOD</h1>
     <p class="subtitle">Your Trusted General Store</p>
 
-    <div class="slider">
-        <img src="https://via.placeholder.com/150" />
-        <img src="https://via.placeholder.com/150" />
-        <img src="https://via.placeholder.com/150" />
-        <img src="https://via.placeholder.com/150" />
-        <img src="https://via.placeholder.com/150" />
-    </div>
-
     <button class="tagline">Eat Well, Feel Good, Live Happy!</button>
 </header>
 
 
+<!-- HIGHLIGHT SECTION -->
+<h2 class="section-title">⭐ Highlight Items ⭐</h2>
+<div class="slider" id="highlightSlider"></div>
+
+
 <!-- SEARCH BAR -->
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search your favorite item..." onkeyup="searchItem()">
+    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="searchItem()">
 </div>
 
 
-<!-- SECTION TITLE -->
-<h2 class="section-title">🛒 PRODUCT LIST 🛒</h2>
-
-
-<!-- PRODUCT GRID -->
-<div class="grid" id="productGrid">
-
-    <!-- ITEM 1 -->
-    <div class="item">
-        <img src="https://via.placeholder.com/300x200">
-        <div class="name">Premium Leather Bag</div>
-        <div class="price">$25.00</div>
-    </div>
-
-    <!-- ITEM 2 -->
-    <div class="item">
-        <img src="https://via.placeholder.com/300x200">
-        <div class="name">Wireless Bluetooth Headset</div>
-        <div class="price">$12.50</div>
-    </div>
-
-    <!-- ITEM 3 -->
-    <div class="item">
-        <img src="https://via.placeholder.com/300x200">
-        <div class="name">Sport Waterproof Watch</div>
-        <div class="price">$18.00</div>
-    </div>
-
-</div>
+<!-- PRODUCT SECTION -->
+<h2 class="section-title">🛒 Product List 🛒</h2>
+<div class="grid" id="productGrid"></div>
 
 
 <script>
+// ========== CONFIG GOOGLE SHEETS ==========
+
+// Ganti ini dengan LINK CSV Google Sheets tab products:
+const SHEET_PRODUCTS = "LINK_CSV_PRODUCTS";
+
+// Ganti ini dengan LINK CSV Google Sheets tab highlight:
+const SHEET_HIGHLIGHT = "LINK_CSV_HIGHLIGHT";
+
+
+// ========== LOAD HIGHLIGHT ITEM ==========
+Papa.parse(SHEET_HIGHLIGHT, {
+    download: true,
+    header: true,
+    complete: function(result) {
+        let slider = document.getElementById("highlightSlider");
+
+        result.data.forEach(item => {
+            if (!item.name) return;
+
+            slider.innerHTML += `
+                <div class="highlight-box">
+                    <img src="${item.img_url}">
+                    <div class="highlight-name">${item.name}</div>
+                    <div class="highlight-price">${item.price}</div>
+                </div>
+            `;
+        });
+    }
+});
+
+
+// ========== LOAD PRODUCT GRID ==========
+Papa.parse(SHEET_PRODUCTS, {
+    download: true,
+    header: true,
+    complete: function(result) {
+        let grid = document.getElementById("productGrid");
+
+        result.data.forEach(item => {
+            if (!item.name) return;
+
+            grid.innerHTML += `
+                <div class="item">
+                    <img src="${item.img_url}">
+                    <div class="name">${item.name}</div>
+                    <div class="price">${item.price}</div>
+                </div>
+            `;
+        });
+    }
+});
+
+
+// SEARCH
 function searchItem() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let items = document.getElementsByClassName("item");
