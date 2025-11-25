@@ -1,4 +1,4 @@
-/* GOOGLE SHEETS */
+/* CSV LINKS */
 const SHEET_PRODUCTS =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
 
@@ -7,13 +7,13 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-/* LOAD HIGHLIGHT */
+/* LOAD HIGHLIGHT ITEMS */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
     complete: res => {
         const div = document.getElementById("highlightSlider");
-        res.data.slice(0, 10).forEach(item => {
+        res.data.forEach(item => {
             if (!item.img_url) return;
             div.innerHTML += `<img src="${item.img_url}">`;
         });
@@ -30,7 +30,7 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* RENDER GRID */
+/* RENDER PRODUCTS */
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
@@ -40,14 +40,13 @@ function renderProducts(list) {
                 <img src="${p.img_url}">
                 <div class="name">${p.name}</div>
                 <div class="price">${p.price}</div>
-            </div>
-        `;
+            </div>`;
     });
 }
 
 /* SEARCH */
 function applyFilters() {
-    let q = document.getElementById("searchInput").value
+    const q = document.getElementById("searchInput").value
         .toLowerCase()
         .trim();
 
@@ -64,7 +63,7 @@ function closeSearch() {
     renderProducts(allProducts);
 }
 
-/* HIGHLIGHT MENU TOGGLE */
+/* TOGGLE HIGHLIGHT MENU */
 function toggleHighlightMenu() {
     const menu = document.getElementById("highlightMenu");
     menu.classList.toggle("open");
