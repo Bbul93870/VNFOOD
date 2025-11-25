@@ -11,89 +11,111 @@
 
 <header class="hero">
     <img src="https://i.imgur.com/GJHq5nY.png" class="logo">
-
     <h1>VN FOOD</h1>
     <p class="subtitle">Your Trusted General Store</p>
-
     <button class="tagline">Eat Well, Feel Good, Live Happy!</button>
 </header>
 
-
-<!-- HIGHLIGHT SECTION -->
 <h2 class="section-title">⭐ Highlight Items ⭐</h2>
 <div class="slider" id="highlightSlider"></div>
 
-
-<!-- SEARCH BAR -->
+<!-- SEARCH + CATEGORY -->
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="searchItem()">
+    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
+
+    <select id="categoryFilter" onchange="applyFilters()">
+        <option value="all">All Categories</option>
+    </select>
 </div>
 
-
-<!-- PRODUCT SECTION -->
 <h2 class="section-title">🛒 Product List 🛒</h2>
-<div class="grid" id="productGrid"></div>
 
+<div class="grid-container">
+    <div class="grid" id="productGrid"></div>
+</div>
 
 <script>
-// ========== GOOGLE SHEET CONFIG ==========
-const SHEET_PRODUCTS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
-const SHEET_HIGHLIGHT = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=2032194924&single=true&output=csv";
+const SHEET_PRODUCTS =
+"https://docs.google.com/spreadsheets/d/1dOe4Udtch6Kr-K3sZt4XClyd_qkv4LPrxgDHeThUpSs/export?format=csv&gid=0";
 
+const SHEET_HIGHLIGHT =
+"https://docs.google.com/spreadsheets/d/1dOe4Udtch6Kr-K3sZt4XClyd_qkv4LPrxgDHeThUpSs/export?format=csv&gid=2032194924";
 
-// ========== LOAD HIGHLIGHT ==========
+let allProducts = [];
+
+// LOAD HIGHLIGHT
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
-    complete: function(result) {
-        let slider = document.getElementById("highlightSlider");
-
-        result.data.forEach(item => {
+    complete: res => {
+        res.data.forEach(item => {
             if (!item.name) return;
-
-            slider.innerHTML += `
+            highlightSlider.innerHTML += `
                 <div class="highlight-box">
                     <img src="${item.img_url}">
                     <div class="highlight-name">${item.name}</div>
                     <div class="highlight-price">${item.price}</div>
-                </div>
-            `;
+                </div>`;
         });
     }
 });
 
-
-// ========== LOAD PRODUCTS ==========
+// LOAD PRODUCTS
 Papa.parse(SHEET_PRODUCTS, {
     download: true,
     header: true,
-    complete: function(result) {
-        let grid = document.getElementById("productGrid");
-
-        result.data.forEach(item => {
-            if (!item.name) return;
-
-            grid.innerHTML += `
-                <div class="item">
-                    <img src="${item.img_url}">
-                    <div class="name">${item.name}</div>
-                    <div class="price">${item.price}</div>
-                </div>
-            `;
-        });
+    complete: res => {
+        allProducts = res.data.filter(i => i.name);
+        generateCategoryFilter(allProducts);
+        renderProducts(allProducts);
     }
 });
 
+// BUILD CATEGORY DROPDOWN
+function generateCategoryFilter(items) {
+    const select = document.getElementById("categoryFilter");
+    let categories = ["all"];
 
-// SEARCH FUNCTION
-function searchItem() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let items = document.getElementsByClassName("item");
+    items.forEach(p => {
+        if (p.category && !categories.includes(p.category))
+            categories.push(p.category);
+    });
 
-    for (let i = 0; i < items.length; i++) {
-        let name = items[i].getElementsByClassName("name")[0].innerText.toLowerCase();
-        items[i].style.display = name.includes(input) ? "block" : "none";
-    }
+    categories.forEach(cat => {
+        select.innerHTML += `<option value="${cat}">${cat}</option>`;
+    });
+}
+
+// RENDER PRODUCTS
+function renderProducts(list) {
+    const grid = document.getElementById("productGrid");
+    grid.innerHTML = "";
+
+    list.forEach(item => {
+        grid.innerHTML += `
+            <div class="item" data-category="${item.category.toLowerCase()}">
+                <img src="${item.img_url}">
+                <div class="name">${item.name}</div>
+                <div class="price">${item.price}</div>
+            </div>`;
+    });
+}
+
+// FILTER FUNCTION (search + category)
+function applyFilters() {
+    let search = document.getElementById("searchInput").value.toLowerCase().trim();
+    let category = document.getElementById("categoryFilter").value.toLowerCase();
+
+    let words = search.split(" ").filter(w => w.length > 0);
+
+    let filtered = allProducts.filter(item => {
+        let name = item.name.toLowerCase();
+        let catMatch = (category === "all" || item.category.toLowerCase() === category);
+        let textMatch = words.every(w => name.includes(w));
+        return catMatch && textMatch;
+    });
+
+    renderProducts(filtered);
 }
 </script>
 
