@@ -14,20 +14,21 @@
     <p class="subtitle">Your Trusted General Store</p>
 </header>
 
-<!-- STICKY HIGHLIGHT (ONLY THIS IS STICKY) -->
+<!-- STICKY HIGHLIGHT ONLY -->
 <div id="stickyHighlight" class="sticky-highlight">
     <div class="slider" id="highlightSlider">
 
         <!-- SEARCH ICON -->
-        <div class="highlight-box search-icon-box" onclick="toggleSearch()">
+        <div class="highlight-box search-icon-box" onclick="openSearch()">
             <div class="search-icon">🔍</div>
         </div>
 
     </div>
 </div>
 
-<!-- FLOATING SEARCH BAR (iOS Spotlight style) -->
+<!-- FLOATING SEARCH BAR (iOS Spotlight Style) -->
 <div id="searchBar" class="floating-search">
+    <button class="close-search" onclick="closeSearch()">✖</button>
     <input type="text" id="searchInput" placeholder="Search items or categories..." onkeyup="applyFilters()">
 </div>
 
