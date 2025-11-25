@@ -11,31 +11,25 @@
 <header class="hero">
     <img src="https://ik.imagekit.io/vs2btsn6j/LOGO" class="logo">
     <h1>VN FOOD</h1>
-    <p class="subtitle">Welcome to VN FOOD! Your Daily Needs and Culinary Adventure Starts Here.</p>
+    <p class="subtitle">Your Trusted General Store</p>
 </header>
 
-<!-- STICKY HIGHLIGHT ONLY -->
+<!-- STICKY HIGHLIGHT (ONLY THIS IS STICKY) -->
 <div id="stickyHighlight" class="sticky-highlight">
     <div class="slider" id="highlightSlider">
+
         <!-- SEARCH ICON -->
         <div class="highlight-box search-icon-box" onclick="toggleSearch()">
             <div class="search-icon">🔍</div>
         </div>
+
     </div>
 </div>
 
-<!-- SEARCH PANEL (NOT STICKY) -->
-<div id="searchPanel" class="search-panel">
-    <button class="close-btn" onclick="toggleSearch()">❮</button>
-
-    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
-
-    <select id="categoryFilter" onchange="applyFilters()">
-        <option value="all">All Categories</option>
-    </select>
+<!-- FLOATING SEARCH BAR (iOS Spotlight style) -->
+<div id="searchBar" class="floating-search">
+    <input type="text" id="searchInput" placeholder="Search items or categories..." onkeyup="applyFilters()">
 </div>
-
-<h2 class="section-title">⭐ Products ⭐</h2>
 
 <!-- PRODUCT GRID -->
 <div class="grid-container">
