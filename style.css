@@ -175,3 +175,61 @@ body {
 }
 .name { font-size: 15px; font-weight: bold; }
 .price { color: gold; font-weight: bold; }
+
+/* =========================================
+   MOBILE HEADER FIX (SMALL, PREMIUM)
+   ========================================= */
+@media (max-width: 600px) {
+
+    /* SMALL MOBILE HEADER */
+    .hero {
+        padding: 8px 0;
+        margin: 0;
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+
+        position: sticky;
+        top: 0;
+        z-index: 2000;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* LOGO SMALLER ON MOBILE */
+    .hero .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* TITLE SMALLER */
+    .hero h1 {
+        font-size: 20px;
+        margin: 0;
+        padding: 0;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* SUBTITLE HIDDEN ON MOBILE (BIAR RAPIH) */
+    .hero .subtitle {
+        display: none;
+    }
+
+    /* SHIFT CONTENT BELOW HEADER */
+    body {
+        padding-top: 65px; /* Space below mobile header */
+    }
+
+    /* STICKY HIGHLIGHT stays below header */
+    .sticky-highlight {
+        top: 65px !important;
+    }
+}
