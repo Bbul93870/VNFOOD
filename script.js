@@ -70,16 +70,16 @@ function closeSearch() {
     renderProducts(allProducts);
 }
 
-/* LIVE SEARCH */
+/* LIVE SEARCH FILTER */
 function applyFilters() {
     let q = document.getElementById("searchInput").value.toLowerCase().trim();
-    let terms = q.split(" ").filter(a => a);
+    let words = q.split(" ").filter(a => a);
 
-    let filtered = allProducts.filter(p =>
-        terms.every(t => p.name.toLowerCase().includes(t))
+    let result = allProducts.filter(p =>
+        words.every(w => p.name.toLowerCase().includes(w))
     );
 
-    renderProducts(filtered);
+    renderProducts(result);
 }
 
 /* STICKY LOGIC */
@@ -98,7 +98,7 @@ window.addEventListener("scroll", () => {
     lastY = y <= 0 ? 0 : y;
 });
 
-/* SLIDER DRAG */
+/* HIGHLIGHT SLIDER DRAG */
 const slider = document.querySelector(".slider");
 let isDown = false, startX, scrollLeft;
 
