@@ -7,7 +7,7 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-/* LOAD HIGHLIGHT (LIMIT 3 ITEMS ONLY) */
+/* LOAD HIGHLIGHT — LIMIT 3 */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
@@ -34,10 +34,11 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* RENDER GRID */
+/* RENDER PRODUCTS */
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
+
     list.forEach(item => {
         grid.innerHTML += `
             <div class="item">
@@ -51,14 +52,17 @@ function renderProducts(list) {
 /* OPEN SEARCH */
 function openSearch() {
     document.getElementById("searchBar").style.display = "block";
+
     document.querySelector(".hero").style.display = "none";
     document.getElementById("stickyHighlight").style.display = "none";
+
     document.getElementById("searchInput").focus();
 }
 
 /* CLOSE SEARCH */
 function closeSearch() {
     document.getElementById("searchBar").style.display = "none";
+
     document.querySelector(".hero").style.display = "block";
     document.getElementById("stickyHighlight").style.display = "block";
 
@@ -96,18 +100,18 @@ window.addEventListener("scroll", () => {
 
 /* SLIDER DRAG */
 const slider = document.querySelector(".slider");
-let down = false, startX, scrollLeft;
+let isDown = false, startX, scrollLeft;
 
 slider.addEventListener("mousedown", e => {
-    down = true;
+    isDown = true;
     startX = e.pageX - slider.offsetLeft;
     scrollLeft = slider.scrollLeft;
 });
 
-slider.addEventListener("mouseup", () => down = false);
-slider.addEventListener("mouseleave", () => down = false);
+slider.addEventListener("mouseup", () => isDown = false);
+slider.addEventListener("mouseleave", () => isDown = false);
 
 slider.addEventListener("mousemove", e => {
-    if (!down) return;
+    if (!isDown) return;
     slider.scrollLeft = scrollLeft - ((e.pageX - slider.offsetLeft) - startX);
 });
