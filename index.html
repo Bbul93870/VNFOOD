@@ -18,7 +18,7 @@
 <div id="stickyHighlight" class="sticky-highlight">
     <div class="slider" id="highlightSlider">
 
-        <!-- SEARCH ICON -->
+        <!-- SEARCH ICON ALWAYS CENTERED -->
         <div class="highlight-box search-icon-box" onclick="openSearch()">
             <div class="search-icon">🔍</div>
         </div>
@@ -26,10 +26,10 @@
     </div>
 </div>
 
-<!-- FLOATING SEARCH BAR (iOS Spotlight Style) -->
+<!-- FLOATING SEARCH BAR (with close button) -->
 <div id="searchBar" class="floating-search">
     <button class="close-search" onclick="closeSearch()">✖</button>
-    <input type="text" id="searchInput" placeholder="Search items or categories..." onkeyup="applyFilters()">
+    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
 </div>
 
 <!-- PRODUCT GRID -->
