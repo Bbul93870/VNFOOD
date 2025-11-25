@@ -5,7 +5,7 @@ body {
     padding: 0;
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
     text-align: center;
     padding: 40px 20px;
@@ -25,35 +25,56 @@ h1 {
 
 .subtitle {
     font-size: 18px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
 }
 
-/* SLIDER (GAMBAR KECIL) */
-.slider {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    overflow-x: auto;
-    padding: 10px;
-}
-
-.slider img {
-    width: 120px;
-    height: 120px;
-    border-radius: 15px;
-}
-
-/* TAGLINE BUTTON */
 .tagline {
-    margin-top: 20px;
     padding: 10px 25px;
-    border: none;
     background: #ff6d43;
     color: white;
-    font-weight: bold;
+    border: none;
     border-radius: 25px;
+    font-weight: bold;
     cursor: pointer;
 }
+
+
+/* HIGHLIGHT SLIDER */
+#highlightSlider {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 15px;
+    scroll-behavior: smooth;
+}
+
+.highlight-box {
+    min-width: 180px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.highlight-box img {
+    width: 100%;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.highlight-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.highlight-price {
+    color: #d94a38;
+    font-weight: bold;
+}
+
 
 /* SEARCH BAR */
 .search-container {
@@ -69,14 +90,15 @@ h1 {
     font-size: 16px;
 }
 
-/* SECTION TITLE */
+/* TITLE */
 .section-title {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 25px;
     font-size: 28px;
     font-weight: bold;
     color: #d94a38;
 }
+
 
 /* PRODUCT GRID */
 .grid {
