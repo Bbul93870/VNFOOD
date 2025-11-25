@@ -5,7 +5,6 @@
     <title>VN FOOD - General Store</title>
     <link rel="stylesheet" href="style.css">
 
-    <!-- PapaParse untuk baca CSV dari Google Sheets -->
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
@@ -37,18 +36,12 @@
 
 
 <script>
-// ========== CONFIG GOOGLE SHEETS ==========
-
-// Ganti ini dengan LINK CSV Google Sheets tab products:
-const SHEET_PRODUCTS = "https://docs.google.com/spreadsheets/d/1dOe4Udtch6Kr-K3sT4XClyd_qkv4LPrxgDHeThUpSs/export?format=csv&gid=0
-";
-
-// Ganti ini dengan LINK CSV Google Sheets tab highlight:
-const SHEET_HIGHLIGHT = "https://docs.google.com/spreadsheets/d/1dOe4Udtch6Kr-K3sT4XClyd_qkv4LPrxgDHeThUpSs/export?format=csv&gid=1
-";
+// ========== GOOGLE SHEET CONFIG ==========
+const SHEET_PRODUCTS = "https://docs.google.com/spreadsheets/d/1dOe4Udtch6Kr-K3sZt4XClyd_qkv4LPrxgDHeThUpSs/export?format=csv&gid=0";
+const SHEET_HIGHLIGHT = "https://docs.google.com/spreadsheets/d/1dOe4Udtch6Kr-K3sZt4XClyd_qkv4LPrxgDHeThUpSs/export?format=csv&gid=2032194924";
 
 
-// ========== LOAD HIGHLIGHT ITEM ==========
+// ========== LOAD HIGHLIGHT ==========
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
@@ -70,7 +63,7 @@ Papa.parse(SHEET_HIGHLIGHT, {
 });
 
 
-// ========== LOAD PRODUCT GRID ==========
+// ========== LOAD PRODUCTS ==========
 Papa.parse(SHEET_PRODUCTS, {
     download: true,
     header: true,
@@ -92,7 +85,7 @@ Papa.parse(SHEET_PRODUCTS, {
 });
 
 
-// SEARCH
+// SEARCH FUNCTION
 function searchItem() {
     let input = document.getElementById("searchInput").value.toLowerCase();
     let items = document.getElementsByClassName("item");
