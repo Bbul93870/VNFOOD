@@ -6,6 +6,7 @@ body {
     background:
         linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
         url("https://ik.imagekit.io/vs2btsn6j/LOGO");
+
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -24,7 +25,6 @@ body {
     text-align: center;
     padding: 20px;
     color: white;
-    position: relative;
 }
 .hero .logo {
     width: 120px;
@@ -35,14 +35,13 @@ body {
     font-size: 32px;
 }
 .subtitle {
-    margin: 0;
     font-size: 15px;
     opacity: 0.85;
 }
 
-/* ================================
-   MOBILE HEADER — FIXED & STUCK
-   ================================ */
+/* ============================================
+   MOBILE HEADER — FIXED ALWAYS (iPHONE STYLE)
+   ============================================ */
 @media (max-width: 600px) {
 
     .hero {
@@ -51,41 +50,46 @@ body {
         left: 0;
         width: 100%;
 
-        padding: 8px 10px;
-        margin: 0;
-
         display: flex;
         align-items: center;
         gap: 10px;
 
+        padding: 10px 12px;
+        margin: 0;
+
         background: rgba(0,0,0,0.65);
         backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.12);
 
+        border-bottom: 1px solid rgba(255,255,255,0.12);
         z-index: 3000;
     }
 
     .hero .logo {
         width: 42px;
         height: 42px;
+        border-radius: 50%;
     }
 
     .hero-text h1 {
         margin: 0;
         font-size: 20px;
+        font-weight: bold;
     }
 
     .subtitle {
         display: none;
     }
 
-    /* BODY CONTENT SHIFT DOWN BELOW FIXED HEADER */
+    /* SHIFT CONTENT BELOW HEADER */
     body {
         padding-top: 70px !important;
+        padding-bottom: 80px !important; /* Because search now is at BOTTOM */
     }
 }
 
-/* STICKY HIGHLIGHT (MUST BE BELOW HEADER ALWAYS) */
+/* ============================================
+   STICKY HIGHLIGHT BELOW FIXED HEADER
+   ============================================ */
 .sticky-highlight {
     position: sticky;
     top: 0;
@@ -99,9 +103,7 @@ body {
 }
 
 @media (max-width: 600px) {
-    .sticky-highlight {
-        top: 70px !important;  /* ALWAYS BELOW MOBILE HEADER */
-    }
+    .sticky-highlight { top: 70px !important; }
 }
 
 .sticky-highlight.hide {
@@ -129,7 +131,6 @@ body {
     backdrop-filter: blur(6px);
 
     box-shadow: 0 0 10px rgba(0,0,0,0.4);
-    text-align: center;
 }
 .highlight-box img {
     width: 100%;
@@ -138,7 +139,7 @@ body {
     border-radius: 8px;
 }
 
-/* PERFECT CENTER SEARCH ICON */
+/* SEARCH ICON CENTER */
 .search-icon-box {
     display: flex;
     justify-content: center;
@@ -154,52 +155,53 @@ body {
 .search-icon {
     font-size: 32px;
     color: white;
-    line-height: 1;
 }
 
-/* FLOATING SEARCH (MUST NOT COVER HEADER) */
+/* ============================================
+   SEARCH BAR — FIXED AT BOTTOM (iPhone Style)
+   ============================================ */
 .floating-search {
     position: fixed;
-    top: 85px; /* BELOW HEADER MOBILE */
+    bottom: 18px;
     left: 50%;
     transform: translateX(-50%);
-    width: 85%;
-    z-index: 3500;
-    display: none;
-}
 
-@media (min-width: 601px) {
-    .floating-search {
-        top: 14px; /* PC version */
-    }
+    width: 90%;
+    z-index: 3500;
+
+    display: none;
 }
 
 .floating-search input {
     width: 100%;
-    padding: 14px 20px;
-    border-radius: 20px;
+    padding: 14px 18px;
+
+    border-radius: 18px;
     border: none;
-
-    background: rgba(255,255,255,0.22);
-    color: white;
     font-size: 17px;
+    color: white;
 
+    background: rgba(255,255,255,0.20);
     backdrop-filter: blur(12px);
+
     box-shadow: 0 0 12px rgba(0,0,0,0.4);
+
+    outline: none;
 }
 
-/* CLOSE SEARCH BUTTON */
+/* X Button inside bottom search */
 .close-search {
     position: absolute;
-    right: 18px;
+    right: 14px;
     top: 50%;
     transform: translateY(-50%);
 
     background: rgba(0,0,0,0.45);
-    border: 1px solid rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.6);
 
     padding: 4px 10px;
     border-radius: 50%;
+
     color: white;
     font-size: 16px;
 
@@ -207,10 +209,11 @@ body {
     z-index: 4000;
 
     backdrop-filter: blur(8px);
-    box-shadow: 0 0 10px rgba(0,0,0,0.6);
 }
 
-/* GRID */
+/* ============================================
+   PRODUCT GRID
+   ============================================ */
 .grid-container { padding: 20px; }
 .grid {
     display: grid;
