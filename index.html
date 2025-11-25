@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>VN FOOD - General Store</title>
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
@@ -15,8 +14,9 @@
     <p class="subtitle">Your Trusted General Store</p>
 </header>
 
-<!-- SEARCH (sticky) -->
+<!-- SEARCH BAR (sticky) -->
 <div class="sticky-search">
+
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
     </div>
@@ -26,19 +26,23 @@
             <option value="all">All Categories</option>
         </select>
     </div>
+
 </div>
 
 <!-- HIGHLIGHT -->
 <h2 class="section-title margin-top">⭐ Highlight Items ⭐</h2>
 <div class="slider" id="highlightSlider"></div>
 
-<!-- PRODUCT SECTION -->
+<!-- PRODUCT LIST -->
 <h2 class="section-title">🛒 Product List 🛒</h2>
 <div class="grid-container">
     <div class="grid" id="productGrid"></div>
 </div>
 
 <script>
+/* ==============================
+   CSV LINKS
+   ============================== */
 const SHEET_PRODUCTS =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
 
@@ -47,14 +51,18 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-/* LOAD HIGHLIGHT */
+/* ==============================
+   LOAD HIGHLIGHT
+   ============================== */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
     complete: res => {
+        const slider = document.getElementById("highlightSlider");
+
         res.data.forEach(item => {
             if (!item.name) return;
-            highlightSlider.innerHTML += `
+            slider.innerHTML += `
                 <div class="highlight-box">
                     <img src="${item.img_url}?v=${Date.now()}">
                     <div class="highlight-name">${item.name}</div>
@@ -64,7 +72,9 @@ Papa.parse(SHEET_HIGHLIGHT, {
     }
 });
 
-/* LOAD PRODUCTS */
+/* ==============================
+   LOAD PRODUCTS
+   ============================== */
 Papa.parse(SHEET_PRODUCTS, {
     download: true,
     header: true,
@@ -75,7 +85,9 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* CATEGORY FILTER */
+/* ==============================
+   BUILD CATEGORY OPTIONS
+   ============================== */
 function generateCategoryFilter(items) {
     const select = document.getElementById("categoryFilter");
     let categories = ["all"];
@@ -90,7 +102,9 @@ function generateCategoryFilter(items) {
     });
 }
 
-/* RENDER PRODUCTS */
+/* ==============================
+   RENDER PRODUCT GRID
+   ============================== */
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
@@ -105,7 +119,9 @@ function renderProducts(list) {
     });
 }
 
-/* SEARCH + CATEGORY FILTER */
+/* ==============================
+   SEARCH + CATEGORY FILTERING
+   ============================== */
 function applyFilters() {
     let search = document.getElementById("searchInput").value.toLowerCase().trim();
     let category = document.getElementById("categoryFilter").value.toLowerCase();
@@ -120,6 +136,42 @@ function applyFilters() {
 
     renderProducts(filtered);
 }
+
+/* ==============================
+   DRAGGABLE SLIDER
+   ============================== */
+const slider = document.querySelector('.slider');
+let isDown = false;
+let startX;
+let scrollLeft;
+
+slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+
+slider.addEventListener('mouseleave', () => isDown = false);
+slider.addEventListener('mouseup', () => isDown = false);
+
+slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1;
+    slider.scrollLeft = scrollLeft - walk;
+});
+
+/* TOUCH SUPPORT */
+slider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+}, { passive: true });
+
+slider.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1;
+    slider.scrollLeft = scrollLeft - walk;
+}, { passive: true });
 </script>
 
 </body>
