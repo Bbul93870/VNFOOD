@@ -12,7 +12,7 @@ body {
 }
 
 .logo {
-    width: 140px;      /* Fixed ratio */
+    width: 140px;  /* fixed ratio */
     height: auto;
 }
 
@@ -37,7 +37,7 @@ h1 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-/* SEARCH & CATEGORY */
+/* SEARCH + CATEGORY */
 .search-container,
 .category-container {
     width: 90%;
@@ -53,31 +53,7 @@ h1 {
     font-size: 15px;
 }
 
-/* HIGHLIGHT (SMALL) */
-.slider {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 12px;
-}
-
-.highlight-box {
-    min-width: 130px;
-    background: white;
-    border-radius: 12px;
-    padding: 8px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.12);
-}
-
-.highlight-box img {
-    width: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-/* TITLES */
+/* SECTION TITLES */
 .section-title {
     text-align: center;
     font-size: 20px;
@@ -86,6 +62,40 @@ h1 {
 
 .margin-top {
     margin-top: 60px;
+}
+
+/* HIGHLIGHT UPGRADED */
+.slider {
+    display: flex;
+    overflow-x: auto;
+    padding: 12px;
+    gap: 12px;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
+}
+
+.highlight-box {
+    min-width: 150px;
+    background: white;
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    scroll-snap-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.12);
+    user-select: none;
+}
+
+.highlight-box img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    object-fit: cover;
 }
 
 /* PRODUCT LIST */
@@ -101,16 +111,15 @@ h1 {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     max-width: 820px;
     margin: auto;
-    gap: 16px;
+    gap: 18px;
 }
 
-/* PRODUCT CARD */
 .item {
     background: white;
     border-radius: 15px;
     padding: 12px;
+    width: 160px;
     text-align: center;
-    width: 160px; /* Compact normal */
     box-shadow: 0 0 10px rgba(0,0,0,0.10);
     display: flex;
     flex-direction: column;
@@ -132,28 +141,18 @@ h1 {
 
 .price {
     color: #d94a38;
-    font-size: 15px;
     font-weight: bold;
 }
-
-
-/* ==============================
-   RESPONSIVE DESIGN
-   ============================== */
-
-/* MOBILE (default) already optimized */
 
 /* TABLET */
 @media (min-width: 768px) {
     .logo { width: 150px; }
     h1 { font-size: 30px; }
-    .grid { gap: 20px; }
 }
 
 /* DESKTOP */
 @media (min-width: 1024px) {
     .logo { width: 180px; }
     h1 { font-size: 34px; }
-    .grid { gap: 22px; }
     .item { width: 170px; }
 }
