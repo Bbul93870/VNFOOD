@@ -14,27 +14,32 @@
     <p class="subtitle">Your Trusted General Store</p>
 </header>
 
-<!-- SEARCH BAR (sticky) -->
-<div class="sticky-search">
+<!-- STICKY HIGHLIGHT + SEARCH ICON -->
+<div id="stickyHighlight" class="sticky-highlight">
+    <div class="slider" id="highlightSlider">
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
+        <!-- SEARCH ICON INSIDE SLIDER -->
+        <div class="highlight-box search-icon-box" onclick="toggleSearch()">
+            <div class="search-icon">🔍</div>
+        </div>
+
     </div>
-
-    <div class="category-container">
-        <select id="categoryFilter" onchange="applyFilters()">
-            <option value="all">All Categories</option>
-        </select>
-    </div>
-
 </div>
 
-<!-- HIGHLIGHT -->
-<h2 class="section-title margin-top">⭐ Highlight Items ⭐</h2>
-<div class="slider" id="highlightSlider"></div>
+<!-- SEARCH PANEL EXPANDABLE -->
+<div id="searchPanel" class="search-panel">
+    <button class="close-btn" onclick="toggleSearch()">❮</button>
+
+    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
+
+    <select id="categoryFilter" onchange="applyFilters()">
+        <option value="all">All Categories</option>
+    </select>
+</div>
+
+<h2 class="section-title">⭐ Highlight Items ⭐</h2>
 
 <!-- PRODUCT LIST -->
-<h2 class="section-title">🛒 Product List 🛒</h2>
 <div class="grid-container">
     <div class="grid" id="productGrid"></div>
 </div>
@@ -52,7 +57,7 @@ const SHEET_HIGHLIGHT =
 let allProducts = [];
 
 /* ==============================
-   LOAD HIGHLIGHT
+   LOAD HIGHLIGHT ITEMS
    ============================== */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
@@ -85,9 +90,7 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* ==============================
-   BUILD CATEGORY OPTIONS
-   ============================== */
+/* CATEGORY FILTER BUILDER */
 function generateCategoryFilter(items) {
     const select = document.getElementById("categoryFilter");
     let categories = ["all"];
@@ -102,9 +105,7 @@ function generateCategoryFilter(items) {
     });
 }
 
-/* ==============================
-   RENDER PRODUCT GRID
-   ============================== */
+/* RENDER PRODUCTS */
 function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
@@ -119,9 +120,7 @@ function renderProducts(list) {
     });
 }
 
-/* ==============================
-   SEARCH + CATEGORY FILTERING
-   ============================== */
+/* SEARCH + CATEGORY FILTER */
 function applyFilters() {
     let search = document.getElementById("searchInput").value.toLowerCase().trim();
     let category = document.getElementById("categoryFilter").value.toLowerCase();
@@ -138,7 +137,33 @@ function applyFilters() {
 }
 
 /* ==============================
-   DRAGGABLE SLIDER
+   SEARCH PANEL TOGGLE
+   ============================== */
+function toggleSearch() {
+    const panel = document.getElementById("searchPanel");
+    panel.classList.toggle("open");
+}
+
+/* ==============================
+   COMPACT MODE ON SCROLL
+   ============================== */
+const sticky = document.getElementById("stickyHighlight");
+let last = 0;
+
+window.addEventListener("scroll", () => {
+    let y = window.scrollY;
+
+    if (y > last + 10) {
+        sticky.classList.add("compact");
+    } else if (y < last - 10) {
+        sticky.classList.remove("compact");
+    }
+
+    last = y;
+});
+
+/* ==============================
+   DRAGGABLE HIGHLIGHT SLIDER
    ============================== */
 const slider = document.querySelector('.slider');
 let isDown = false;
@@ -150,7 +175,6 @@ slider.addEventListener('mousedown', (e) => {
     startX = e.pageX - slider.offsetLeft;
     scrollLeft = slider.scrollLeft;
 });
-
 slider.addEventListener('mouseleave', () => isDown = false);
 slider.addEventListener('mouseup', () => isDown = false);
 
@@ -161,7 +185,6 @@ slider.addEventListener('mousemove', (e) => {
     slider.scrollLeft = scrollLeft - walk;
 });
 
-/* TOUCH SUPPORT */
 slider.addEventListener('touchstart', (e) => {
     startX = e.touches[0].pageX - slider.offsetLeft;
     scrollLeft = slider.scrollLeft;
@@ -172,6 +195,7 @@ slider.addEventListener('touchmove', (e) => {
     const walk = (x - startX) * 1;
     slider.scrollLeft = scrollLeft - walk;
 }, { passive: true });
+
 </script>
 
 </body>
