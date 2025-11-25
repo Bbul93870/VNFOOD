@@ -8,30 +8,25 @@
 </head>
 <body>
 
-<!-- HEADER (PC & Mobile) -->
+<!-- HEADER (PC + Mobile) -->
 <header class="hero">
     <img src="https://ik.imagekit.io/vs2btsn6j/LOGO" class="logo">
-    <div class="hero-text">
-        <h1>VN FOOD</h1>
-        <p class="subtitle">Your Trusted General Store</p>
-    </div>
+    <h1>VN FOOD</h1>
 </header>
 
-<!-- STICKY HIGHLIGHT ONLY -->
-<div id="stickyHighlight" class="sticky-highlight">
-    <div class="slider" id="highlightSlider">
-
-        <!-- SEARCH ICON -->
-        <div class="highlight-box search-icon-box" onclick="openSearch()">
-            <div class="search-icon">🔍</div>
-        </div>
-
-    </div>
+<!-- MOBILE HIGHLIGHT BUTTON (side floating) -->
+<div id="highlightToggle" class="highlight-toggle" onclick="toggleHighlightMenu()">
+    ⭐
 </div>
 
-<!-- FLOATING SEARCH BAR -->
+<!-- MOBILE HIGHLIGHT SLIDE-OUT MENU -->
+<div id="highlightMenu" class="highlight-menu">
+    <div id="highlightSlider"></div>
+</div>
+
+<!-- FLOATING BOTTOM SEARCH BAR (iPhone style) -->
 <div id="searchBar" class="floating-search">
-    <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
+    <input type="text" id="searchInput" placeholder="Search..." onkeyup="applyFilters()">
     <button class="close-search" onclick="closeSearch()">✖</button>
 </div>
 
