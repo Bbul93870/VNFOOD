@@ -30,7 +30,7 @@ body {
     border-radius: 50%;
 }
 
-/* STICKY HIGHLIGHT ONLY */
+/* STICKY HIGHLIGHT */
 .sticky-highlight {
     position: sticky;
     top: 0;
@@ -47,7 +47,7 @@ body {
     transform: translateY(-100%);
 }
 
-/* CENTERED SLIDER */
+/* SLIDER */
 .slider {
     display: flex;
     justify-content: center;
@@ -57,7 +57,7 @@ body {
 }
 .slider::-webkit-scrollbar { display: none; }
 
-/* HIGHLIGHT ITEM (LIMIT 3) */
+/* HIGHLIGHT BOX */
 .highlight-box {
     min-width: 80px;
     padding: 6px;
@@ -75,9 +75,28 @@ body {
     object-fit: cover;
 }
 
-/* SEARCH ICON CENTER */
+/* PERFECT CENTERED SEARCH ICON */
+.search-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 70px;
+    min-height: 70px;
+
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+
+    box-shadow: 0 0 10px rgba(0,0,0,0.35);
+}
+
 .search-icon {
-    font-size: 28px;
+    font-size: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
     color: white;
 }
 
@@ -99,15 +118,17 @@ body {
     border-radius: 20px;
     border: none;
     background: rgba(255,255,255,0.22);
+
     color: white;
     font-size: 17px;
 
     backdrop-filter: blur(12px);
     box-shadow: 0 0 12px rgba(0,0,0,0.4);
+
     outline: none;
 }
 
-/* CLOSE BUTTON FIXED + ALWAYS VISIBLE */
+/* CLOSE SEARCH BUTTON */
 .close-search {
     position: absolute;
     right: 18px;
@@ -119,6 +140,7 @@ body {
 
     padding: 4px 10px;
     border-radius: 50%;
+
     color: white;
     font-size: 16px;
 
