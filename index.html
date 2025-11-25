@@ -8,17 +8,20 @@
 </head>
 <body>
 
+<!-- HEADER (PC & Mobile) -->
 <header class="hero">
     <img src="https://ik.imagekit.io/vs2btsn6j/LOGO" class="logo">
-    <h1>VN FOOD</h1>
-    <p class="subtitle">Welcome to VN FOOD! Your Daily Needs and Culinary Adventure Starts Here.</p>
+    <div class="hero-text">
+        <h1>VN FOOD</h1>
+        <p class="subtitle">Your Trusted General Store</p>
+    </div>
 </header>
 
 <!-- STICKY HIGHLIGHT ONLY -->
 <div id="stickyHighlight" class="sticky-highlight">
     <div class="slider" id="highlightSlider">
 
-        <!-- SEARCH ICON ALWAYS CENTERED -->
+        <!-- SEARCH ICON -->
         <div class="highlight-box search-icon-box" onclick="openSearch()">
             <div class="search-icon">🔍</div>
         </div>
@@ -26,7 +29,7 @@
     </div>
 </div>
 
-<!-- FLOATING SEARCH BAR (with close button) -->
+<!-- FLOATING SEARCH BAR -->
 <div id="searchBar" class="floating-search">
     <input type="text" id="searchInput" placeholder="Search items..." onkeyup="applyFilters()">
     <button class="close-search" onclick="closeSearch()">✖</button>
