@@ -1,76 +1,52 @@
-/* ===== BACKGROUND 1x1 REPEATING + 30% TRANSPARENT ===== */
-
+/* ===============================
+   GLOBAL ANTI-CRASH BACKGROUND
+   =============================== */
 
 body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial;
 
-    /* 2 LAYERS: transparency overlay + pattern */
-    background-image:
-        linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),  /* 30% visible image */
+    /* 30% transparency using dark overlay */
+    background:
+        rgba(0,0,0,0.65),
         url("https://ik.imagekit.io/vs2btsn6j/LOGO?updatedAt=1764115415618");
 
-    /* repeat yg rapi */
+    /* repeat pattern */
     background-repeat: repeat;
+    background-position: top center;
 
-    /* PERFECT 1x1 scaling (tidak melar) */
-    background-size: 40vmin 40vmin; /* ubah 30–50vmin sesuai selera */
+    /* PERFECT 1x1 scaling WITHOUT GPU OVERLOAD */
+    background-size: 35vmin 35vmin;
 
-    /* posisi pattern */
-    background-position: center top;
-
-    /* kualitas premium */
+    /* high quality but safe */
     image-rendering: optimizeQuality;
 
-    /* safe area all devices */
     padding-top: env(safe-area-inset-top);
     padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
 
-
-
-/* ============================
-   GLASS PREMIUM COMPONENTS
-   ============================ */
-
-.glass-header,
-.glass-button,
-.glass-panel,
-.glass-bottom {
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
-    background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.25);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-}
-
-/* Soft Glow on Logo */
-.glow {
-    filter: drop-shadow(0 0 10px rgba(255,255,255,0.6));
-}
-
-/* ============================
-   HEADER (PREMIUM)
-   ============================ */
-
+/* ===============================
+   HEADER (LIGHT GLASS, SAFE)
+   =============================== */
 .hero {
     position: fixed;
     top: env(safe-area-inset-top);
     width: 100%;
     z-index: 4000;
 
+    padding: 12px 20px;
     display: flex;
     align-items: center;
     gap: 14px;
 
-    padding: 12px 20px;
-    border-radius: 0 0 20px 20px;
+    background: rgba(0,0,0,0.55);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 
-.hero .logo {
-    width: 52px;
-    height: 52px;
+.logo {
+    width: 50px;
+    height: 50px;
     border-radius: 12px;
     object-fit: cover;
 }
@@ -82,10 +58,9 @@ body {
     font-weight: 700;
 }
 
-/* ============================
-   SEARCH BAR BOTTOM
-   ============================ */
-
+/* ===============================
+   SEARCH FLOATING
+   =============================== */
 .floating-search {
     position: fixed;
     bottom: calc(22px + env(safe-area-inset-bottom));
@@ -93,21 +68,18 @@ body {
     transform: translateX(-50%);
 
     width: min(90%, 500px);
-    padding: 15px 20px;
-    border-radius: 25px;
+    padding: 14px 20px;
+
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+
+    border-radius: 20px;
 
     display: flex;
     align-items: center;
     gap: 10px;
 
     z-index: 5000;
-    animation: bounceUp 0.7s ease-out;
-}
-
-@keyframes bounceUp {
-    0%   { transform: translate(-50%, 30px); opacity: 0; }
-    60%  { transform: translate(-50%, -5px); }
-    100% { transform: translate(-50%, 0); opacity: 1; }
 }
 
 .floating-search input {
@@ -120,44 +92,43 @@ body {
 }
 
 .close-search {
-    background: rgba(0,0,0,0.55);
-    border: 1px solid white;
-    color: white;
+    background: rgba(255,255,255,0.3);
+    border: none;
     padding: 6px 9px;
     border-radius: 50%;
+    color: white;
     cursor: pointer;
 }
 
-/* ============================
-   HIGHLIGHT BUTTON (SIDE)
-   ============================ */
-
+/* ===============================
+   HIGHLIGHT TOGGLE
+   =============================== */
 .highlight-toggle {
     position: fixed;
     top: calc(120px + env(safe-area-inset-top));
     left: 20px;
-    width: 54px;
-    height: 54px;
 
-    border-radius: 16px;
-    font-size: 26px;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+
     display: flex;
     justify-content: center;
     align-items: center;
 
     color: white;
+    font-size: 26px;
+
     z-index: 3500;
-
-    transition: 0.25s;
-}
-.highlight-toggle:active {
-    transform: scale(0.92);
+    cursor: pointer;
 }
 
-/* ============================
-   SLIDE-OUT HIGHLIGHT PANEL (PREMIUM)
-   ============================ */
-
+/* ===============================
+   HIGHLIGHT PANEL (SCROLL, SAFE)
+   =============================== */
 .highlight-menu {
     position: fixed;
     top: calc(120px + env(safe-area-inset-top));
@@ -167,6 +138,9 @@ body {
     height: 360px;
 
     padding: 14px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+
     border-radius: 18px;
 
     display: flex;
@@ -177,19 +151,13 @@ body {
     -webkit-overflow-scrolling: touch;
 
     z-index: 3499;
-    transition: 0.45s cubic-bezier(.22,1.28,.84,1); /* iOS spring */
+    transition: 0.35s ease;
 }
 
-.highlight-menu::-webkit-scrollbar {
-    display: none;
-}
-
-/* open animation */
 .highlight-menu.open {
     left: 90px;
 }
 
-/* highlight item row */
 .highlight-item {
     display: flex;
     gap: 10px;
@@ -197,10 +165,7 @@ body {
     padding: 10px;
     border-radius: 14px;
 
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(12px);
-
-    animation: fadeIn 0.4s ease;
+    background: rgba(255,255,255,0.15);
 }
 
 .highlight-item img {
@@ -221,20 +186,19 @@ body {
     font-size: 15px;
     font-weight: bold;
 }
-.h-price {
-    font-size: 16px;
-    font-weight: bold;
-    background: linear-gradient(90deg, #ffd700, #ffb700, #ffe066);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-/* ============================
-   PRODUCT GRID
-   ============================ */
 
+.h-price {
+    font-size: 14px;
+    color: gold;
+    font-weight: bold;
+}
+
+/* ===============================
+   PRODUCT GRID
+   =============================== */
 .grid-container {
     padding: 16px;
-    margin-top: calc(80px + env(safe-area-inset-top));
+    margin-top: calc(100px + env(safe-area-inset-top));
 }
 
 .grid {
@@ -244,13 +208,11 @@ body {
 }
 
 .item {
+    background: rgba(0,0,0,0.5);
     padding: 14px;
     border-radius: 16px;
-    background: rgba(255,255,255,0.18);
-    backdrop-filter: blur(14px);
     text-align: center;
     color: white;
-    animation: fadeIn 0.6s ease;
 }
 
 .item img {
@@ -260,10 +222,14 @@ body {
     object-fit: cover;
 }
 
+.name {
+    margin-top: 6px;
+    font-weight: bold;
+}
+
 .price {
+    margin-top: 4px;
     font-size: 16px;
     font-weight: bold;
-    background: linear-gradient(90deg, #ffd700, #ffb700, #ffe066);
-    -webkit-background-clip: text;
-    color: transparent;
+    color: gold;
 }
