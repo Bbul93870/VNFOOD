@@ -6,29 +6,32 @@
         name="viewport" 
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
-    <title>VN FOOD - General Store</title>
+    <title>VN FOOD - Premium Store</title>
     <link rel="stylesheet" href="style.css">
+
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 
-<header class="hero">
-    <img src="https://ik.imagekit.io/vs2btsn6j/LOGO?updatedAt=1764115415618" class="logo">
+<header class="hero glass-header fade-in">
+    <img src="https://ik.imagekit.io/vs2btsn6j/LOGO" class="logo glow">
     <h1>VN FOOD</h1>
 </header>
 
-<div id="highlightToggle" class="highlight-toggle" onclick="toggleHighlightMenu()">⭐</div>
+<div id="highlightToggle" class="highlight-toggle glass-button" onclick="toggleHighlightMenu()">
+    ⭐
+</div>
 
-<div id="highlightMenu" class="highlight-menu">
+<div id="highlightMenu" class="highlight-menu glass-panel">
     <div id="highlightSlider"></div>
 </div>
 
-<div id="searchBar" class="floating-search">
+<div id="searchBar" class="floating-search glass-bottom">
     <input type="text" id="searchInput" placeholder="Search..." onkeyup="applyFilters()">
-    <button class="close-search" onclick="closeSearch()">✖</button>
+    <button class="close-search">✖</button>
 </div>
 
-<div class="grid-container">
+<div class="grid-container fade-in">
     <div class="grid" id="productGrid"></div>
 </div>
 
