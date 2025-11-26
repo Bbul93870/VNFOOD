@@ -259,3 +259,11 @@ body {
     border-radius: 12px;
     object-fit: cover;
 }
+
+.price {
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ffd700, #ffb700, #ffe066);
+    -webkit-background-clip: text;
+    color: transparent;
+}
