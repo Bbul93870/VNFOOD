@@ -2,28 +2,30 @@
    GLOBAL PREMIUM BACKGROUND LEVEL 3
    ============================ */
 
-/* ===== PERFECT SQUARE BACKGROUND (1x1) ===== */
+/* ===== BACKGROUND 1x1 REPEATING PERFECT ===== */
 body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial;
 
-    /* Background 1x1 Square */
+    /* square image 1x1 */
     background-image: url("https://ik.imagekit.io/vs2btsn6j/LOGO");
-    background-repeat: no-repeat;
 
-    /* ALWAYS center */
-    background-position: center center;
+    /* pattern repeats downwards and sideways */
+    background-repeat: repeat;
 
-    /* Fill screen WITHOUT stretching (keeps 1:1 ratio) */
-    background-size: cover;
+    /* ALWAYS keep perfect 1x1 square scale */
+    background-size: 40vmin 40vmin; /* scale otomatis, tetap square */
 
-    /* Smooth, high quality */
+    /* align pattern neatly */
+    background-position: center top;
+
+    /* smooth & premium quality */
     image-rendering: optimizeQuality;
 
-    /* For iPhone safe area */
+    /* universal safe area */
     padding-top: env(safe-area-inset-top);
-    padding-bottom: calc(90px + env(safe-area-inset-bottom));
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
 
 
