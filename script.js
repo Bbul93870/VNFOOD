@@ -15,7 +15,7 @@ Papa.parse(SHEET_HIGHLIGHT, {
         const box = document.getElementById("highlightSlider");
 
         res.data.forEach(item => {
-            if (!item.img_url || !item.name) return;
+            if (!item.img_url) return;
 
             box.innerHTML += `
                 <div class="highlight-item">
@@ -40,8 +40,8 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* RENDER PRODUCTS */
-function renderProducts(list) {
+/* RENDER GRID */
+function renderProducts(list){
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
 
@@ -57,24 +57,18 @@ function renderProducts(list) {
 }
 
 /* SEARCH */
-function applyFilters() {
-    let q = document.getElementById("searchInput").value
-        .toLowerCase().trim();
-
-    let result = allProducts.filter(p =>
-        p.name.toLowerCase().includes(q)
-    );
-
-    renderProducts(result);
+function applyFilters(){
+    let q = document.getElementById("searchInput").value.toLowerCase();
+    renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q)));
 }
 
 /* CLEAR SEARCH */
-function closeSearch() {
+document.querySelector(".close-search").onclick = () => {
     document.getElementById("searchInput").value = "";
     renderProducts(allProducts);
-}
+};
 
-/* TOGGLE HIGHLIGHT MENU */
-function toggleHighlightMenu() {
+/* TOGGLE HIGHLIGHT */
+function toggleHighlightMenu(){
     document.getElementById("highlightMenu").classList.toggle("open");
 }
