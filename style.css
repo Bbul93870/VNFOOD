@@ -1,235 +1,184 @@
-/* ===============================
-   GLOBAL ANTI-CRASH BACKGROUND
-   =============================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Arial;
-
-    /* 30% transparency using dark overlay */
-    background:
-        rgba(0,0,0,0.65),
-        url("https://ik.imagekit.io/vs2btsn6j/LOGO?updatedAt=1764115415618");
-
-    /* repeat pattern */
-    background-repeat: repeat;
-    background-position: top center;
-
-    /* PERFECT 1x1 scaling WITHOUT GPU OVERLOAD */
-    background-size: 35vmin 35vmin;
-
-    /* high quality but safe */
-    image-rendering: optimizeQuality;
-
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    font-family: -apple-system, Segoe UI, Arial;
+    background: #000;
+    color: white;
+    overflow-x: hidden;
 }
 
-/* ===============================
-   HEADER (LIGHT GLASS, SAFE)
-   =============================== */
+/* HEADER */
 .hero {
     position: fixed;
-    top: env(safe-area-inset-top);
+    top: 0;
     width: 100%;
-    z-index: 4000;
-
-    padding: 12px 20px;
+    padding: 14px 20px;
     display: flex;
     align-items: center;
     gap: 14px;
-
     background: rgba(0,0,0,0.55);
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-}
-
-.logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-.hero h1 {
-    margin: 0;
-    color: white;
-    font-size: 22px;
-    font-weight: 700;
-}
-
-/* ===============================
-   SEARCH FLOATING
-   =============================== */
-.floating-search {
-    position: fixed;
-    bottom: calc(22px + env(safe-area-inset-bottom));
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: min(90%, 500px);
-    padding: 14px 20px;
-
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(8px);
-
-    border-radius: 20px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
+    backdrop-filter: blur(14px);
     z-index: 5000;
 }
-
-.floating-search input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 17px;
-}
-
-.close-search {
-    background: rgba(255,255,255,0.3);
-    border: none;
-    padding: 6px 9px;
-    border-radius: 50%;
-    color: white;
-    cursor: pointer;
-}
-
-/* ===============================
-   HIGHLIGHT TOGGLE
-   =============================== */
-.highlight-toggle {
-    position: fixed;
-    top: calc(120px + env(safe-area-inset-top));
-    left: 20px;
-
-    width: 52px;
-    height: 52px;
+.logo {
+    width: 50px; height: 50px;
     border-radius: 14px;
-
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(8px);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    color: white;
-    font-size: 26px;
-
-    z-index: 3500;
-    cursor: pointer;
-}
-
-/* ===============================
-   HIGHLIGHT PANEL (SCROLL, SAFE)
-   =============================== */
-.highlight-menu {
-    position: fixed;
-    top: calc(120px + env(safe-area-inset-top));
-    left: -240px;
-
-    width: 220px;
-    height: 360px;
-
-    padding: 14px;
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(8px);
-
-    border-radius: 18px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-
-    z-index: 3499;
-    transition: 0.35s ease;
-}
-
-.highlight-menu.open {
-    left: 90px;
-}
-
-.highlight-item {
-    display: flex;
-    gap: 10px;
-
-    padding: 10px;
-    border-radius: 14px;
-
-    background: rgba(255,255,255,0.15);
-}
-
-.highlight-item img {
-    width: 55px;
-    height: 55px;
-    border-radius: 10px;
     object-fit: cover;
 }
+.hero h1 { font-size: 22px; }
 
-.highlight-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+/* HIGHLIGHT */
+.highlight-toggle {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    display: flex; justify-content: center; align-items: center;
+    font-size: 26px;
+    z-index: 4000;
+}
+.highlight-menu {
+    position: fixed;
+    top: 120px;
+    left: -260px;
+    width: 230px; height: 360px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 14px;
+    overflow-y: auto;
+    transition: .35s ease;
+    z-index: 3999;
+}
+.highlight-menu.open { left: 90px; }
+
+.highlight-item {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px);
+    padding: 10px; border-radius: 14px;
+    display: flex; gap: 10px;
+    margin-bottom: 12px;
+}
+.highlight-item img {
+    width: 55px; height: 55px;
+    border-radius: 12px; object-fit: cover;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 22px;
+    padding: 12px 24px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    z-index: 6000;
+}
+.nav-btn {
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent;
     color: white;
+    border-radius: 14px;
+    font-size: 22px;
+    padding: 10px 14px;
 }
 
-.h-title {
-    font-size: 15px;
-    font-weight: bold;
-}
+/* PAGE SYSTEM */
+.page { display: none; padding-bottom: 160px; }
+.page.active { display: block; }
 
-.h-price {
-    font-size: 14px;
-    color: gold;
-    font-weight: bold;
-}
-
-/* ===============================
-   PRODUCT GRID
-   =============================== */
-.grid-container {
-    padding: 16px;
-    margin-top: calc(100px + env(safe-area-inset-top));
-}
-
+/* HOME GRID */
+.grid-container { padding: 16px; margin-top: 110px; }
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
     gap: 18px;
 }
-
 .item {
-    background: rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
     padding: 14px;
-    border-radius: 16px;
+    border-radius: 18px;
     text-align: center;
-    color: white;
 }
-
 .item img {
     width: 100%;
     aspect-ratio: 1/1;
-    border-radius: 12px;
+    border-radius: 14px;
     object-fit: cover;
+    cursor: pointer;
+}
+.name { margin-top: 6px; font-weight: bold; }
+.price { margin-top: 4px; color: gold; font-weight: bold; }
+
+/* CATEGORY */
+.category-list {
+    margin: 120px 20px 20px;
+    display: flex; flex-direction: column;
+    gap: 16px;
+}
+.category-item {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px);
+    padding: 16px;
+    border-radius: 18px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.25);
 }
 
-.name {
-    margin-top: 6px;
-    font-weight: bold;
+/* CATEGORY ITEM PAGE */
+#categoryItemPage .item {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(16px);
 }
 
-.price {
-    margin-top: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    color: gold;
+/* SEARCH PAGE */
+.search-head {
+    margin-top: 90px; padding: 20px;
+    display: flex; gap: 12px; align-items: center;
+}
+.close-search-page {
+    background: rgba(255,255,255,0.25);
+    padding: 10px 14px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px; color: white;
+}
+.search-head input {
+    flex: 1;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 14px;
+    border: none; color: white;
+    font-size: 17px;
+}
+
+/* IMAGE VIEWER */
+.image-viewer {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center; align-items: center;
+    z-index: 9999;
+}
+.image-viewer img {
+    width: 90%; max-width: 600px;
+    border-radius: 16px;
+}
+
+/* TOP BACK BUTTON */
+.top-back-btn {
+    margin-top: 90px;
+    margin-left: 20px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.25);
 }
