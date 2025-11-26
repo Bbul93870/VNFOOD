@@ -1,4 +1,3 @@
-/* CSV LINKS */
 const SHEET_PRODUCTS =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTCtV7qFSDZDCVIDI2vkXzGxI5GbG8Ez8suIyx_TrDEXSS6t23s6QrFn9ttW079TZk6yenfuc5LVt1/pub?gid=0&single=true&output=csv";
 
@@ -7,7 +6,6 @@ const SHEET_HIGHLIGHT =
 
 let allProducts = [];
 
-/* LOAD HIGHLIGHT */
 Papa.parse(SHEET_HIGHLIGHT, {
     download: true,
     header: true,
@@ -24,13 +22,11 @@ Papa.parse(SHEET_HIGHLIGHT, {
                         <div class="h-title">${item.name}</div>
                         <div class="h-price">${item.price || ""}</div>
                     </div>
-                </div>
-            `;
+                </div>`;
         });
     }
 });
 
-/* LOAD PRODUCTS */
 Papa.parse(SHEET_PRODUCTS, {
     download: true,
     header: true,
@@ -40,8 +36,7 @@ Papa.parse(SHEET_PRODUCTS, {
     }
 });
 
-/* RENDER GRID */
-function renderProducts(list){
+function renderProducts(list) {
     const grid = document.getElementById("productGrid");
     grid.innerHTML = "";
 
@@ -51,24 +46,20 @@ function renderProducts(list){
                 <img src="${p.img_url}">
                 <div class="name">${p.name}</div>
                 <div class="price">${p.price}</div>
-            </div>
-        `;
+            </div>`;
     });
 }
 
-/* SEARCH */
-function applyFilters(){
+function applyFilters() {
     let q = document.getElementById("searchInput").value.toLowerCase();
     renderProducts(allProducts.filter(p => p.name.toLowerCase().includes(q)));
 }
 
-/* CLEAR SEARCH */
-document.querySelector(".close-search").onclick = () => {
+function closeSearch() {
     document.getElementById("searchInput").value = "";
     renderProducts(allProducts);
-};
+}
 
-/* TOGGLE HIGHLIGHT */
-function toggleHighlightMenu(){
+function toggleHighlightMenu() {
     document.getElementById("highlightMenu").classList.toggle("open");
 }
