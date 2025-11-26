@@ -2,35 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
     <title>VN FOOD - General Store</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 
-<!-- HEADER (PC + MOBILE) -->
 <header class="hero">
-    <img src="https://ik.imagekit.io/vs2btsn6j/LOGO?updatedAt=1764115415618" class="logo">
+    <img src="https://ik.imagekit.io/vs2btsn6j/LOGO" class="logo">
     <h1>VN FOOD</h1>
 </header>
 
-<!-- HIGHLIGHT BUTTON -->
-<div id="highlightToggle" class="highlight-toggle" onclick="toggleHighlightMenu()">
-    ⭐
-</div>
+<div id="highlightToggle" class="highlight-toggle" onclick="toggleHighlightMenu()">⭐</div>
 
-<!-- SLIDE-OUT HIGHLIGHT MENU -->
 <div id="highlightMenu" class="highlight-menu">
     <div id="highlightSlider"></div>
 </div>
 
-<!-- FLOATING BOTTOM SEARCH BAR -->
 <div id="searchBar" class="floating-search">
     <input type="text" id="searchInput" placeholder="Search..." onkeyup="applyFilters()">
     <button class="close-search" onclick="closeSearch()">✖</button>
 </div>
 
-<!-- PRODUCT GRID -->
 <div class="grid-container">
     <div class="grid" id="productGrid"></div>
 </div>
